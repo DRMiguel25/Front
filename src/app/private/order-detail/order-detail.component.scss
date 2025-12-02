@@ -1,0 +1,89 @@
+// Estilo general del modal
+:host {
+    display: block;
+    font-family: 'Roboto', sans-serif; // O la fuente que use tu proyecto
+    min-width: 350px;
+}
+
+.modal-header {
+    padding: 20px 24px 10px;
+    
+    h2 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0;
+        color: #333;
+    }
+}
+
+mat-dialog-content {
+    padding: 0 24px 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.client-info {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+
+    h3 {
+        font-size: 1.1rem;
+        color: #555;
+        font-weight: normal;
+        margin: 0;
+    }
+
+    .client-name {
+        font-weight: bold;
+        color: #000;
+    }
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.order-item {
+    .product-name {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #444;
+        margin-bottom: 5px;
+    }
+
+    .ingredients-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding-left: 0; // Alineado a la izquierda como en la foto
+    }
+
+    .ingredient-row {
+        font-size: 0.9rem;
+        color: #777; // Gris suave para los extras
+    }
+}
+
+// Botón verde "Orden Lista"
+.btn-ready {
+    background-color: #58a478; // Verde similar al de la imagen
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: #468c60;
+    }
+}
+
+mat-dialog-actions {
+    padding: 10px 24px 20px;
+    margin-bottom: 0;
+}

@@ -51,7 +51,8 @@ export class SignInComponent {
           this._router.navigate(['private/menu']);
           break;
         case 1:
-          this._router.navigate(['private/orders-view']);
+          // CORREGIDO: Redirige al Dashboard Admin para ver las gráficas
+          this._router.navigate(['private/dash-admin']);
           break;
         case 2:
           this._router.navigate(['private/chef-order-view']);

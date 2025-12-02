@@ -1,16 +1,97 @@
-<mat-card appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>Ventas totales</mat-card-title>
-      <mat-card-subtitle>{{total.total}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-header>
-        <mat-card-title>Promedio tiempo de realizacion</mat-card-title>
-        <mat-card-subtitle>{{avg.minutos}} minutos</mat-card-subtitle>
-      </mat-card-header>
-  </mat-card>  
-<h2>Ventas del mes</h2>
-<canvas baseChart [data]="dataSales" [type]="'bar'" #chartSales></canvas>
-<h2>Mejores clientes</h2>
-<canvas baseChart [data]="dataClient" [type]="'bar'"></canvas>
-<h2>Productos más vendidos</h2>
-<canvas baseChart [data]="dataProduct" [type]="'bar'"></canvas>
+<div class="dashboard-container">
+    <!-- Cards de estadísticas -->
+    <div class="stats-cards">
+        <mat-card appearance="outlined" class="stat-card">
+            <mat-card-header>
+                <mat-card-title>Ventas totales</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-value">${{total.total | number:'1.2-2'}}</h2>
+            </mat-card-content>
+        </mat-card>
+        
+        <mat-card appearance="outlined" class="stat-card">
+            <mat-card-header>
+                <mat-card-title>Promedio tiempo de realización</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-value">{{avg.minutos | number:'1.2-2'}} min</h2>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- Gráfica de Ventas del mes (Dona) -->
+    <div class="chart-container">
+        <mat-card appearance="outlined">
+            <mat-card-header>
+                <mat-card-title>
+                    <div class="chart-title">
+                        <span>Ventas del mes</span>
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="chart-wrapper">
+                    <canvas 
+                        baseChart 
+                        #chartSales
+                        [data]="dataSales" 
+                        [type]="'doughnut'"
+                        [options]="doughnutChartOptions">
+                    </canvas>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- Gráficas en dos columnas -->
+    <div class="charts-row">
+        <!-- Mejores clientes (Pastel) -->
+        <div class="chart-container">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>
+                        <div class="chart-title">
+                            <span>Mejores clientes</span>
+                        </div>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="chart-wrapper">
+                        <canvas 
+                            baseChart 
+                            #chartClients
+                            [data]="dataClient" 
+                            [type]="'pie'"
+                            [options]="pieChartOptions">
+                        </canvas>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Productos más vendidos (Pastel) -->
+        <div class="chart-container">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>
+                        <div class="chart-title">
+                            <span>Productos más vendidos</span>
+                        </div>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="chart-wrapper">
+                        <canvas 
+                            baseChart 
+                            #chartProducts
+                            [data]="dataProduct" 
+                            [type]="'pie'"
+                            [options]="pieChartOptions">
+                        </canvas>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

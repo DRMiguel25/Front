@@ -6,7 +6,7 @@
       "type": "npm",
       "script": "start",
       "isBackground": true,
-      "problemMatcher": {
+      "problemMatcher": { 
         "owner": "typescript",
         "pattern": "$tsc",
         "background": {

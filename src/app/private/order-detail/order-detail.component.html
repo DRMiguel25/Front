@@ -1,22 +1,66 @@
-
+<div class="modal-header">
     <h2 mat-dialog-title>Detalles de la orden</h2>
+</div>
 
-    <mat-dialog-content>
-        <h3>Cliente: {{orderDetails?.[0]?.client}}</h3>
-        <div class="order-container">
-            @for (eachOrder of orderDetails; track $index) {
-            <div class="order">
-                <h4>{{eachOrder?.category}} {{eachOrder?.product}}</h4>
-                @for (notIngredient of eachOrder?.ingredients; track $index) {
-                <h5>{{notIngredient?.type==0?'Sin':'Extra'}} {{notIngredient?.name}}</h5>
+<mat-dialog-content>
+    <div class="client-info">
+        <h3>Cliente: <span class="client-name">{{ data.client }}</span></h3>
+        
+        <!-- Nota General de la orden -->
+        @if (data.comments) {
+            <p class="general-note" style="color: #d32f2f; font-weight: bold; margin-top: 5px;">
+                 Nota General: {{ data.comments }}
+            </p>
+        }
+    </div>
+
+    <div class="order-list">
+        @if (orderDetails.length === 0) {
+            <p style="text-align: center; color: gray; padding: 20px;">Cargando productos...</p>
+        }
+
+        @for (item of orderDetails; track $index) {
+            <div class="order-item" style="border-bottom: 1px dashed #eee; padding-bottom: 10px; margin-bottom: 10px;">
+                
+                <!-- Nombre y Cantidad -->
+                <div class="product-name" style="font-size: 1.1em; font-weight: 500;">
+                    {{ item.product }} 
+                    <span class="qty" *ngIf="item.amount > 1" style="font-weight: bold;">x{{ item.amount }}</span>
+                </div>
+
+                <!-- AQUÍ ESTÁ LO QUE FALTABA: Comentarios del Producto -->
+                @if (item.comments_product) {
+                    <div class="product-note" style="color: #d32f2f; font-style: italic; font-size: 0.95em; margin: 2px 0 5px 10px;">
+                        Nota: {{ item.comments_product }}
+                    </div>
+                }
+
+                <!-- Ingredientes (Extras / Sin) -->
+                @if (item.ingredients && item.ingredients.length > 0) {
+                    <div class="ingredients-list" style="margin-left: 15px; font-size: 0.9em; color: #555;">
+                        @for (ing of item.ingredients; track $index) {
+                            <div class="ingredient-row">
+                                <span [style.color]="ing.type == 1 ? 'green' : 'red'" style="font-weight: 500;">
+                                    {{ ing.type == 1 ? '+ Extra' : '- Sin' }}
+                                </span> 
+                                {{ ing.name }}
+                            </div>
+                        }
+                    </div>
                 }
             </div>
         }
-        </div>
-    </mat-dialog-content>
+    </div>
+</mat-dialog-content>
 
-    <mat-dialog-actions align="end" class="flex gap-x-2">
-        @if (_router.url == '/private/chef-order-view') {
-        <button [mat-dialog-close]="true" class="button-primary" cdkFocusInitial (click)="updateStatus()">Orden Lista</button>
-        }
-    </mat-dialog-actions>
+<mat-dialog-actions align="end">
+    <!-- Botón diferente según si es Chef o Mesero -->
+    @if (_router.url.includes('chef')) {
+        <button class="btn-ready" (click)="updateStatus()" 
+                style="background-color: #2e7d32; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+            ¡Orden Lista! 
+        </button>
+    } @else {
+        <button mat-button mat-dialog-close>Cerrar</button>
+    }
+</mat-dialog-actions>
