@@ -2,20 +2,23 @@
     <form [formGroup]="_order.formOrder" (ngSubmit)="placeOrder()">
         <div class="buttons">
             <h1>Orden</h1>
+            
             <mat-form-field>
-                <mat-label>
-                    Cliente
-                </mat-label>
-                <input matInput type="text" formControlName="client">
+                <mat-label>Cliente</mat-label>
+                <input matInput type="text" formControlName="client" [readonly]="isClient">
             </mat-form-field>
-            <mat-radio-group (change)="selected($event)" class="unselect">
-                <mat-radio-button [value]="1">
-                    Comer aquí
-                </mat-radio-button>
-                <mat-radio-button [value]="0">
-                    Para llevar
-                </mat-radio-button>
-            </mat-radio-group>
+
+            @if (!isClient) {
+                <mat-radio-group (change)="selected($event)" class="unselect">
+                    <mat-radio-button [value]="1">Comer aquí</mat-radio-button>
+                    <mat-radio-button [value]="0">Para llevar</mat-radio-button>
+                </mat-radio-group>
+            } @else {
+                <div style="display: flex; align-items: center; gap: 5px; color: #555;">
+                    <mat-icon>shopping_bag</mat-icon>
+                    <strong>Pedido para llevar</strong>
+                </div>
+            }
         </div>
 
         <div class="products-order" formArrayName="order_details">
@@ -28,37 +31,36 @@
                     </h2>
                     
                     <div class="order-type-container">
-                        <form action="" [formGroupName]="$index">
-                            <mat-radio-group formControlName="order_type">
-                                <mat-radio-button [value]="1">
-                                    Comer aquí
-                                </mat-radio-button>
-                                <mat-radio-button [value]="0">
-                                    Para llevar
-                                </mat-radio-button>
-                            </mat-radio-group>
-                        </form>
+                        @if (!isClient) {
+                            <form action="" [formGroupName]="$index">
+                                <mat-radio-group formControlName="order_type">
+                                    <mat-radio-button [value]="1">Comer aquí</mat-radio-button>
+                                    <mat-radio-button [value]="0">Para llevar</mat-radio-button>
+                                </mat-radio-group>
+                            </form>
+                        }
+                        
                         <h5>{{ (item.value.unit_price * item.value.amount) | currency }}</h5>
                         <button type="button" (click)="deleteProduct($index)"><mat-icon>delete</mat-icon></button>
                     </div>
                 </div>
                 <div class="comments">
                     @if (filterExtras(item.value, 1).length) {
-                    <h3>Extras</h3>
-                    @for (ingredient of filterExtras(item.value, 1); track $index) {
-                    <div class="extras-container">
-                        <h4>{{ingredient.name}}</h4>
-                        <h5>{{ (ingredient.price * item.value.amount) | currency}}</h5>
-                    </div>
-                    }
+                        <h3>Extras</h3>
+                        @for (ingredient of filterExtras(item.value, 1); track $index) {
+                        <div class="extras-container">
+                            <h4>{{ingredient.name}}</h4>
+                            <h5>{{ (ingredient.price * item.value.amount) | currency}}</h5>
+                        </div>
+                        }
                     }
                     @if (filterExtras(item.value, 0).length){
-                    <h3>Excepciones</h3>
-                    @for (ingredient of filterExtras(item.value, 0); track $index) {
-                    <div class="exception-container">
-                        <h4>{{ingredient.name}}</h4>
-                    </div>
-                    }
+                        <h3>Excepciones</h3>
+                        @for (ingredient of filterExtras(item.value, 0); track $index) {
+                        <div class="exception-container">
+                            <h4>{{ingredient.name}}</h4>
+                        </div>
+                        }
                     }
                 </div>
             </div>
@@ -78,9 +80,13 @@
                 </div>
             </div>
         </div>
-        <div class="float"><button class="button-secundary" [routerLink]="['/private/menu']"
-                routerLinkActive="router-link-active">Regresar</button>
-            <button class="button-primary" type="submit">Ordenar</button>
+        <div class="float">
+            <div class="button-group">
+                <button class="button-secundary" [routerLink]="['/private/menu']" routerLinkActive="router-link-active">
+                    Regresar
+                </button>
+                <button class="button-primary" type="submit">Confirmar Orden</button>
+            </div>
         </div>
     </form>
 </section>

@@ -1,1 +1,65 @@
-<p>sign-up works!</p>
+<section class="signup-container">
+    <div class="signup-background"></div>
+    
+    <div class="signup-card glass">
+        <div class="logo-section">
+            <img src="assets/logo.png" alt="AS Burger Logo" class="logo" />
+            <h1 class="brand-title">Crear Cuenta</h1>
+            <p class="brand-subtitle">Únete a AS Burger</p>
+        </div>
+
+        <form class="signup-form" [formGroup]="formSignUp" (ngSubmit)="register()">
+            
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Nombre de Usuario</mat-label>
+                <input matInput type="text" formControlName="name" placeholder="Ej. JuanPerez" autocomplete="username" />
+                <mat-icon matPrefix>person</mat-icon>
+                <mat-error *ngIf="formSignUp.get('name')?.hasError('required')">
+                    El nombre es requerido
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Teléfono (10 dígitos)</mat-label>
+                <input matInput type="tel" formControlName="phone" placeholder="Ej. 4421234567" maxlength="10" autocomplete="tel"/>
+                <mat-icon matPrefix>phone</mat-icon>
+                <mat-error *ngIf="formSignUp.get('phone')?.hasError('required')">
+                    El teléfono es requerido
+                </mat-error>
+                <mat-error *ngIf="formSignUp.get('phone')?.hasError('pattern')">
+                    Deben ser 10 números exactos
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Contraseña</mat-label>
+                <input matInput formControlName="password" type="password" autocomplete="new-password" />
+                <mat-icon matPrefix>lock</mat-icon>
+                <mat-error *ngIf="formSignUp.get('password')?.hasError('required')">
+                    La contraseña es requerida
+                </mat-error>
+                <mat-error *ngIf="formSignUp.get('password')?.hasError('minlength')">
+                    Mínimo 6 caracteres
+                </mat-error>
+            </mat-form-field>
+
+            <button type="submit" class="button-primary signup-button" [disabled]="formSignUp.invalid">
+                <mat-icon>person_add</mat-icon>
+                <span>Registrarse</span>
+            </button>
+
+            <div class="divider">
+                <span>o</span>
+            </div>
+            
+            <div class="login-section">
+                <p class="login-text">¿Ya tienes cuenta?</p>
+                <a routerLink="/auth/sign-in" class="button-secondary login-link">
+                    <mat-icon>login</mat-icon>
+                    <span>Iniciar Sesión</span>
+                </a>
+            </div>
+        </form>
+
+    </div>
+</section>

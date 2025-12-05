@@ -2,18 +2,23 @@ import { Routes } from '@angular/router';
 import { PrivateComponent } from './private/private.component';
 import { ChefOrderViewComponent } from './private/chef-order-view/chef-order-view.component';
 import { MenuComponent } from './private/menu/menu.component';
-import { PublicComponent } from './public/public.component';
-import { Component } from '@angular/core';
 import { SignInComponent } from './public/auth/sign-in/sign-in.component';
+import { SignUpComponent } from './public/auth/sign-up/sign-up.component'; 
+
 import { OrderViewComponent } from './private/order-view/order-view.component';
 import { OrdersViewComponent } from './private/orders-view/orders-view.component';
 import { DashAdminComponent } from './private/dash-admin/dash-admin.component';
 import { UserViewComponent } from './private/user-view/user-view.component';
 import { UserComponent } from './private/user/user.component';
+
 export const routes: Routes = [
   {
     path: 'auth/sign-in',
     component: SignInComponent,
+  },
+  {
+    path: 'auth/sign-up', 
+    component: SignUpComponent,
   },
   {
     path: '',
@@ -54,6 +59,10 @@ export const routes: Routes = [
       },
       {
         path: 'user-edit/:id',
+        component: UserComponent,
+      },
+      {
+        path: 'profile',
         component: UserComponent,
       },
     ],

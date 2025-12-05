@@ -4,7 +4,7 @@
     ¿Está seguro de cancelar esta orden?
 </mat-dialog-content>
 
-<mat-dialog-actions align="end" class="flex gap-x-2">
+<mat-dialog-actions align="end" class="button-group">
     <button [mat-dialog-close]="false" class="button-secundary">Cancelar</button>
     <button [mat-dialog-close]="true" class="button-primary" cdkFocusInitial (click)="updateStatus()">Confirmar</button>
 </mat-dialog-actions>

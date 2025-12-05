@@ -1,19 +1,82 @@
-<section>
-    <table mat-table [dataSource]="filterByStatus()" #chefTable>
-        <ng-container matColumnDef="client">
-            <th mat-header-cell *matHeaderCellDef> Cliente </th>
-            <td mat-cell *matCellDef="let element"> {{element.client}} </td>
-        </ng-container>
-        <ng-container matColumnDef="comments">
-            <th mat-header-cell *matHeaderCellDef> Comentarios </th>
-            <td mat-cell *matCellDef="let element"> {{element.comments}} </td>
-        </ng-container>
-        <ng-container matColumnDef="function">
-            <th mat-header-cell *matHeaderCellDef> Funciones </th>
-            <td mat-cell *matCellDef="let element"> <button class="button-primary" (click)="openConfirmDialog(element)">Realizar pedido</button> </td>
-        </ng-container>
+<section class="chef-container">
+    
+    @if (currentOrder) {
+        <div class="current-order-section">
+            <h2 class="section-title">Orden Actual</h2>
+            
+            <div class="order-card">
+                <div class="order-header">
+                    <div class="order-info">
+                        <h3 class="order-number">Orden #{{currentOrder.idorder}}</h3>
+                        <p class="client-name">
+                            <mat-icon>person</mat-icon>
+                            {{currentOrder.client}}
+                        </p>
+                    </div>
+                    <div class="order-type">
+                        <mat-icon>{{currentOrder.order_type == 1 ? 'restaurant' : 'shopping_bag'}}</mat-icon>
+                        <span>{{currentOrder.order_type == 1 ? 'Comer aquí' : 'Para llevar'}}</span>
+                    </div>
+                </div>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+                @if (currentOrder.comments) {
+                    <div class="order-comments">
+                        <mat-icon>comment</mat-icon>
+                        <p>{{currentOrder.comments}}</p>
+                    </div>
+                }
+
+                <div class="order-products">
+                    <h4>Productos</h4>
+                    <!-- Aquí irían los detalles de productos -->
+                    <p class="product-placeholder">Ver detalles de productos en el diálogo</p>
+                </div>
+
+                <div class="order-actions">
+                    <button class="button-secondary" (click)="viewDetails(currentOrder)">
+                        <mat-icon>visibility</mat-icon>
+                        <span>Ver Detalles</span>
+                    </button>
+                    <button class="button-primary" (click)="markAsReady(currentOrder)">
+                        <mat-icon>check_circle</mat-icon>
+                        <span>Marcar como Lista</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    } @else {
+        <div class="no-orders">
+            <mat-icon>restaurant_menu</mat-icon>
+            <h3>No hay órdenes pendientes</h3>
+            <p>Las nuevas órdenes aparecerán aquí automáticamente</p>
+        </div>
+    }
+
+    @if (pendingOrders.length > 0) {
+        <div class="pending-orders-section">
+            <h3 class="section-title">Órdenes en Cola ({{pendingOrders.length}})</h3>
+            
+            <div class="pending-orders-list">
+                @for (order of pendingOrders; track order.idorder; let i = $index) {
+                    <div class="pending-order-item" (click)="selectOrder(order)">
+                        <div class="pending-order-left">
+                            <div class="pending-order-position">{{i + 2}}</div>
+                            <div class="pending-order-info">
+                                <div class="pending-order-client">
+                                    <mat-icon>person</mat-icon>
+                                    <span>{{order.client}}</span>
+                                </div>
+                                <div class="pending-order-type">
+                                    <mat-icon>{{order.order_type == 1 ? 'restaurant' : 'shopping_bag'}}</mat-icon>
+                                    <span>{{order.order_type == 1 ? 'Comer aquí' : 'Para llevar'}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-icon class="pending-order-arrow">chevron_right</mat-icon>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
 </section>

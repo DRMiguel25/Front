@@ -1,25 +1,286 @@
-section {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-.form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 384px;
-    justify-content: center;
+/* =========================================
+   SIGN-IN - Paleta "Fuego & Carbón"
+   Estilo moderno tipo UberEats/Rappi
+   ========================================= */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
 }
-img {
-    width: 100%;
-    max-width: 256px;
+
+.login-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/assets/hamburger-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
 }
-.button-secundary{
-    margin-top: 16px;
-    width: 100%;
-    max-width: 384px;
-    text-align: center;
+
+@keyframes backgroundMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
 }
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  border-radius: 20px;  /* Bordes muy redondeados */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  background: #FFFFFF;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  animation: logoFloat 3s ease-in-out infinite;
+  border-radius: 16px;
+  background-color: white;
+  padding: 8px;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.brand-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #263238;  /* Gris oscuro */
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.brand-subtitle {
+  font-size: 0.95rem;
+  color: #546E7A;  /* Gris medio */
+  font-weight: 500;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  width: 100%;
+  
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background-color: #FFFFFF;
+      border-radius: 12px;
+    }
+    
+    .mat-mdc-form-field-focus-overlay {
+      background-color: transparent;
+    }
+    
+    .mdc-text-field--filled {
+      background-color: #FFFFFF !important;
+    }
+    
+    .mdc-notched-outline {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: #ECEFF1;
+        border-width: 2px;
+        transition: border-color 0.3s ease;
+      }
+    }
+    
+    &.mat-focused {
+      .mdc-notched-outline {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: #FF6D00 !important;  /* Naranja al enfocar */
+          border-width: 2px !important;
+        }
+      }
+    }
+    
+    .mat-mdc-form-field-icon-prefix {
+      color: #FF6D00;
+      margin-right: 8px;
+    }
+    
+    .mdc-text-field--outlined .mat-mdc-form-field-infix {
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+    
+    input {
+      color: #263238 !important;
+      font-family: 'Roboto', sans-serif;
+      background-color: transparent !important;
+      
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus {
+        -webkit-text-fill-color: #263238 !important;
+        -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+    }
+  }
+}
+
+.login-button {
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  background-color: #FF6D00;  /* Naranja Vibrante */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 109, 0, 0.3);
+  
+  &:hover {
+    background-color: #E65100;  /* Naranja Quemado */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 109, 0, 0.4);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    background-color: #CFD8DC;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ECEFF1;
+  }
+  
+  span {
+    padding: 0 16px;
+    color: #546E7A;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}
+
+.signup-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.signup-text {
+  font-size: 0.9rem;
+  color: #546E7A;
+  font-weight: 500;
+  margin: 0;
+}
+
+.signup-button {
+  width: 100%;
+  background: transparent;
+  border: 2px solid #ECEFF1;
+  color: #546E7A;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: #FF6D00;
+    color: #FF6D00;
+    background: #FFF3E0;  /* Fondo naranja muy clarito */
+  }
+  
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .login-container {
+    padding: 16px;
+  }
+  
+  .login-card {
+    padding: 30px 24px;
+  }
+  
+  .brand-title {
+    font-size: 1.75rem;
+  }
+  
+  .logo {
+    width: 100px;
+  }
 }

@@ -1,16 +1,44 @@
-<section>
-    <img src="assets/logo.png" alt="" />
-    <form class="form" [formGroup]="form_signin" (ngSubmit)="signin()">
-        <mat-form-field appearance="outline">
-            <mat-label>Nombre</mat-label><input type="text" matInput formControlName="name"/><mat-icon matPrefix>person</mat-icon>
-            <mat-error>Ingresa un valor válido</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Contraseña</mat-label><input type="text" matInput formControlName="password" type="password" /><mat-icon
-                matPrefix>password</mat-icon><mat-error></mat-error>
-        </mat-form-field>
-        <button type="submit" class="button-primary">Entrar</button>
-        
-    </form>
+<section class="login-container">
+    <div class="login-background"></div>
     
+    <div class="login-card glass">
+        <div class="logo-section">
+            <img src="assets/logo.png" alt="AS Burger Logo" class="logo" />
+            <h1 class="brand-title">AS Burger</h1>
+            <p class="brand-subtitle">Sistema de Gestión de Órdenes</p>
+        </div>
+        
+        <form class="login-form" [formGroup]="form_signin" (ngSubmit)="signin()">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Nombre de Usuario</mat-label>
+                <input type="text" matInput formControlName="name" autocomplete="username"/>
+                <mat-icon matPrefix>person</mat-icon>
+                <mat-error>Ingresa un valor válido</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Contraseña</mat-label>
+                <input matInput formControlName="password" type="password" autocomplete="current-password" />
+                <mat-icon matPrefix>lock</mat-icon>
+                <mat-error>Requerido</mat-error>
+            </mat-form-field>
+            
+            <button type="submit" class="button-primary login-button">
+                <mat-icon>login</mat-icon>
+                <span>Iniciar Sesión</span>
+            </button>
+
+            <div class="divider">
+                <span>o</span>
+            </div>
+
+            <div class="signup-section">
+                <p class="signup-text">¿Eres nuevo?</p>
+                <button type="button" [routerLink]="['/auth/sign-up']" class="button-secondary signup-button">
+                    <mat-icon>person_add</mat-icon>
+                    <span>Registrarse como Cliente</span>
+                </button>
+            </div>
+        </form>
+    </div>
 </section>

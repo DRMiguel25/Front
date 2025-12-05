@@ -1,10 +1,16 @@
 <form [formGroup]="_order.formOrder" class="container float-container">
-    <mat-sidenav-container hasBackdrop="false">
-        <mat-sidenav #barraComentarios position="end" mode="push" class="nav">
+    <mat-sidenav-container hasBackdrop="true">
+        <mat-sidenav #barraComentarios position="end" mode="over" class="nav">
+            <div class="sidebar-header">
+                <h3>Personaliza tu orden</h3>
+                <button class="close-button" (click)="barraComentarios.close()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
             <div formArrayName="order_details">
                 @for (product of orderDetailsArray().controls; track product; let productindex = $index) {
                 <h2>{{filterByProduct(product.value.products_idproducts)?.name}} {{product.value.amount}}</h2>
-                @if (filterByIngredient('required', 0, filterByProduct(product.value.products_idproducts)?.ingredients,
+                @if (filterByIngredient('required', 1, filterByProduct(product.value.products_idproducts)?.ingredients,
                 product.value.products_idproducts, product.value.amount)?.length){
                 <div class="ingredientsContainer">
                     <div>
@@ -13,7 +19,7 @@
                         </mat-label>
                     </div>
                     <div class="container-exceptions">
-                        @for (ingredient of filterByIngredient('required', 0,
+                        @for (ingredient of filterByIngredient('required', 1,
                         filterByProduct(product.value.products_idproducts)?.ingredients,
                         product.value.products_idproducts,
                         product.value.amount); track $index) {

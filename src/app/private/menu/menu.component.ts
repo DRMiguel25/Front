@@ -92,14 +92,23 @@ export class MenuComponent {
     idproduct: string,
     amount: number
   ): Ingredient[] | undefined {
-    const type = value == 0 ? 1 : 0;
-
+    // For extras (key='extra', value=1), we just filter by the extra property
+    // For required ingredients (key='required', value=1), we filter by required property
+    // AND exclude any that are in the exceptions list (type=0 means exception/removal)
+    
+    if (key === 'extra' && value === 1) {
+      // Show ALL ingredients as extras (same as exceptions)
+      return ingredients;
+    }
+    
+    if (key === 'required' && value === 1) {
+      // Show ALL ingredients as exceptions (same as extras)
+      return ingredients;
+    }
+    
+    // Fallback for other cases
     return ingredients?.filter(
-      (ingredient: Ingredient) =>
-        ingredient[key] == value &&
-        !this.filterExtraExceptions(idproduct, amount, type).includes(
-          ingredient.idingredients
-        )
+      (ingredient: Ingredient) => ingredient[key] == value
     );
   }
 
@@ -148,15 +157,28 @@ export class MenuComponent {
       (product: any) =>
         product.products_idproducts == idproduct && product.amount == amount
     );
+    
     if (event) {
-  
-      (
-        (
-          (this._order.formOrder.controls['order_details'] as FormArray).at(
-            index
-          ) as FormGroup
-        ).controls['not_ingredient'] as FormArray
-      ).push(this._order.notIngredients(idingredient, type, name, price));
+      // Primero, eliminar el ingrediente del tipo opuesto si existe
+      const oppositeType = type === 0 ? 1 : 0;
+      const notIngredientArray = (
+        (this._order.formOrder.controls['order_details'] as FormArray).at(
+          index
+        ) as FormGroup
+      ).controls['not_ingredient'] as FormArray;
+      
+      const oppositeIndex = notIngredientArray.value.findIndex(
+        (ingredient: any) =>
+          ingredient.ingredients_idingredients == idingredient &&
+          ingredient.type == oppositeType
+      );
+      
+      if (oppositeIndex !== -1) {
+        notIngredientArray.removeAt(oppositeIndex);
+      }
+      
+      // Ahora agregar el ingrediente con el tipo actual
+      notIngredientArray.push(this._order.notIngredients(idingredient, type, name, price));
     } else {
   
       const indexIngredient = (
@@ -189,6 +211,10 @@ export class MenuComponent {
       (product: any) =>
         product.products_idproducts == idproduct && product.amount == amount
     );
+
+    if (index === -1) {
+      return [];
+    }
 
     return (
       (

@@ -1,28 +1,48 @@
-<form [formGroup]="formulario" (ngSubmit)="save()">
-    <mat-form-field>
-        <mat-label>Nombre</mat-label>
-        <input type="text" matInput formControlName="name">
-        <mat-error>Campo requerido</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Contraseña</mat-label>
-        <input type="password" matInput formControlName="password">
-        <mat-error>Campo requerido</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Telefono</mat-label>
-        <input type="text" matInput formControlName="phone">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Rol</mat-label>
-        <mat-select formControlName="rol">
-            @for (rol of roles; track $index) {
-                <mat-option [value]="rol.value">{{rol.name}}</mat-option>
+<section class="user-container">
+    <div class="card">
+        <h2>{{ isProfileEdit ? 'Mi Perfil' : (id ? 'Editar Usuario' : 'Crear Usuario') }}</h2>
+        
+        <form [formGroup]="formulario" (ngSubmit)="save()">
+            
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="name">
+                <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Teléfono</mat-label>
+                <input matInput formControlName="phone">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>{{ isProfileEdit || id ? 'Nueva Contraseña (Opcional)' : 'Contraseña' }}</mat-label>
+                <input matInput formControlName="password" type="password">
+                <mat-hint *ngIf="isProfileEdit || id">Déjalo en blanco para mantener la actual</mat-hint>
+                <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            @if (!isProfileEdit) {
+                <mat-form-field appearance="outline">
+                    <mat-label>Rol</mat-label>
+                    <mat-select formControlName="rol">
+                        @for (rol of roles; track rol) {
+                            <mat-option [value]="rol.value">{{rol.name}}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-error>Requerido</mat-error>
+                </mat-form-field>
             }
-        </mat-select>
-        <mat-error>Campo requerido</mat-error>
-    </mat-form-field>
-    <button type="submit" class="button-primary">Guardar</button>
-    @if (id) {
-    <button type="button" class="button-secundary" (click)="deleteUser()">Eliminar</button>}
-</form>
+
+            <div class="actions button-group">
+                <button type="button" class="button-secundary" 
+                        [routerLink]="isProfileEdit ? ['/private/menu'] : ['/private/user-view']">
+                    Cancelar
+                </button>
+                
+                <button type="submit" class="button-primary">Guardar Cambios</button>
+            </div>
+
+        </form>
+    </div>
+</section>

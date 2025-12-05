@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { OrderService } from '../../services/order.service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, CommonModule } from '@angular/common'; // Agregamos CommonModule
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import {
@@ -22,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-order-view',
   standalone: true,
   imports: [
+    CommonModule, // Necesario para *ngIf
     CurrencyPipe,
     MatFormFieldModule,
     MatRadioModule,
@@ -43,7 +44,27 @@ export class OrderViewComponent {
   private _snackBar: MatSnackBar = inject(MatSnackBar);
   private _localStorage: LocalstorageService = inject(LocalstorageService);
 
+  // Variable para saber si es cliente
+  isClient: boolean = false;
+
   async ngOnInit() {
+    const user = this._localStorage.getItem('user');
+    
+    if (user && user.rol === 4) {
+      this.isClient = true;
+      
+      // 1. AUTO-LLENAR NOMBRE
+      this._order.formOrder.patchValue({
+        client: user.name,
+        origin: 'App Cliente'
+      });
+
+      // 2. FORZAR "PARA LLEVAR" (0) EN TODOS LOS PRODUCTOS
+      this.eachProduct().controls.forEach((product: AbstractControl) => {
+        const productAux: FormGroup = product as FormGroup;
+        productAux.controls['order_type'].patchValue(0); // 0 = Para llevar
+      });
+    }
   }
 
   filterExtras(item: any, type: 0 | 1) {
@@ -97,14 +118,11 @@ export class OrderViewComponent {
   }
 
   async placeOrder() {
-    // 1. Calcular el total antes de enviar
     this.totalOrder();
 
-    // 2. GENERAR ID ÚNICO
     const newId = self.crypto.randomUUID();
     this._order.formOrder.controls['idorder'].patchValue(newId);
 
-    // 3. Obtener y validar el usuario
     const user = this._localStorage.getItem('user');
     if (user && user.idusers) {
       this._order.formOrder.controls['users_idusers'].patchValue(user.idusers);
@@ -113,8 +131,8 @@ export class OrderViewComponent {
       return; 
     }
 
-    // 4. FORMATO DE FECHA PARA MYSQL (Solución al error_save)
-    // Convertimos la fecha a string 'YYYY-MM-DD HH:MM:SS'
+    this._order.formOrder.controls['status'].patchValue(0); 
+    
     const now = new Date();
     const mysqlDate = now.getFullYear() + '-' +
         ('0' + (now.getMonth() + 1)).slice(-2) + '-' +
@@ -125,12 +143,9 @@ export class OrderViewComponent {
     
     this._order.formOrder.controls['date'].patchValue(mysqlDate);
 
-    // 5. Rellenar datos obligatorios por defecto
-    this._order.formOrder.controls['status'].patchValue(0); // 0 = Pendiente
-    
-    // Si no se seleccionó origen, poner 'Mostrador'
+    // Si es cliente, aseguramos origen 'App Cliente', si no 'Mostrador'
     if (!this._order.formOrder.controls['origin'].value) {
-        this._order.formOrder.controls['origin'].patchValue('Mostrador');
+        this._order.formOrder.controls['origin'].patchValue(this.isClient ? 'App Cliente' : 'Mostrador');
     }
 
     console.log("Enviando orden:", this._order.formOrder.value);
@@ -144,13 +159,13 @@ export class OrderViewComponent {
           
           this._snackBar.open("Orden realizada con éxito", "", { duration: 3000, verticalPosition: 'top' });
           
-          // Redirección basada en el rol
           const rol = user.rol;
           if(rol === 1) {
-               // Si es Admin, ir a ver la tabla de órdenes
                this._router.navigate(['private/orders-view']); 
+          } else if (rol === 4) { // Cliente
+               // IMPORTANTE: Al cliente lo mandamos a VER sus órdenes
+               this._router.navigate(['private/orders-view']);
           } else {
-               // Si es Mesero/Cajero, volver al menú
                this._router.navigate(['private/menu']);
           }
 
@@ -158,16 +173,13 @@ export class OrderViewComponent {
           while (this.orderDetailsArray().length !== 0) {
             this.orderDetailsArray().removeAt(0);
           }
-        } else {
-          this._snackBar.open("Error: El servidor no devolvió datos.", "", { duration: 3000, verticalPosition: 'top' });
-        }
+        } 
       } catch (error) {
-        console.error("Error al crear la orden:", error);
-        this._snackBar.open("Error al procesar la orden.", "", { duration: 3000, verticalPosition: 'top' });
+        console.error("Error al crear:", error);
+        this._snackBar.open("Error al procesar. Revisa la consola.", "", { duration: 3000 });
       }
     } else {
-      this._snackBar.open("Formulario inválido o sin conexión.", "", { duration: 3000, verticalPosition: 'top' });
-      document.querySelectorAll('.ng-invalid, .mat-mdc-radio-group.unselect').forEach((element: Element) => element.classList.add('invalid'));
+      this._snackBar.open("Formulario inválido", "", { duration: 3000 });
       this._order.formOrder.markAllAsTouched();
     }
   }
