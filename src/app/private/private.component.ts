@@ -5,6 +5,9 @@ import { MatSidenavModule, MatDrawer } from '@angular/material/sidenav';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LocalstorageService } from '../services/localstorage.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { ProviderService } from '../services/provider.service';
+import { ChartData, ChartOptions } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-private',
@@ -14,7 +17,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     MatSidenavModule,
     MatIconModule,
     RouterOutlet,
-    RouterLink
+    RouterLink,
+    BaseChartDirective
   ],
   templateUrl: './private.component.html',
   styleUrls: ['./private.component.scss']
@@ -23,23 +27,57 @@ export class PrivateComponent {
   private _localstorage: LocalstorageService = inject(LocalstorageService);
   private _router: Router = inject(Router);
   private _breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
+  private _provider: ProviderService = inject(ProviderService);
 
   @ViewChild('drawer') drawer!: MatDrawer;
 
   user: string = '';
+  userId: string = '';
   rol: number = 0;
   isMobile: boolean = false;
   drawerMode: 'side' | 'over' = 'side';
   drawerOpened: boolean = true;
 
-  ngOnInit() {
+  // Propiedades para la gráfica del cliente
+  hasChartData: boolean = false;
+  clientChartData!: ChartData<'pie'>;
+  sidebarChartOptions: ChartOptions<'pie'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          padding: 8,
+          font: { size: 10 },
+          color: 'rgba(255, 255, 255, 0.9)',
+          boxWidth: 12
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return `${context.label}: ${context.parsed} pedidos`;
+          }
+        }
+      }
+    }
+  };
+
+  async ngOnInit() {
     const userData = this._localstorage.getItem('user');
 
     if (userData) {
       this.user = userData.name;
+      this.userId = userData.idusers;
       this.rol = userData.rol;
       this.applyRoleTheme();
       this.redirectByRole();
+
+      // Si es cliente, cargar gráfica de productos más pedidos
+      if (this.rol === 4) {
+        await this.loadClientChart();
+      }
     } else {
       this._router.navigate(['/auth/sign-in']);
     }
@@ -53,6 +91,36 @@ export class PrivateComponent {
       this.drawerMode = this.isMobile ? 'over' : 'side';
       this.drawerOpened = !this.isMobile;
     });
+  }
+
+  private async loadClientChart() {
+    try {
+      const response: any = await this._provider.request('GET', 'graphics/clientTopProducts', { userId: this.userId });
+      
+      if (response && response.labels && response.labels.length > 0) {
+        const chartColors = [
+          'rgba(255, 159, 64, 0.9)',
+          'rgba(255, 99, 132, 0.9)',
+          'rgba(54, 162, 235, 0.9)',
+          'rgba(255, 206, 86, 0.9)',
+          'rgba(75, 192, 192, 0.9)'
+        ];
+
+        this.clientChartData = {
+          labels: response.labels,
+          datasets: [{
+            data: response.data,
+            backgroundColor: chartColors,
+            borderColor: chartColors.map(c => c.replace('0.9', '1')),
+            borderWidth: 2,
+            hoverOffset: 8
+          }]
+        };
+        this.hasChartData = true;
+      }
+    } catch (error) {
+      console.error('Error cargando gráfica del cliente:', error);
+    }
   }
 
   toggleDrawer() {

@@ -57,6 +57,16 @@
 
       </div>
 
+      <!-- Gráfica de productos favoritos para clientes -->
+      <ng-container *ngIf="rol === 4 && hasChartData">
+        <div class="sidebar-chart">
+          <h4>📊 Mis Favoritos del Mes</h4>
+          <div class="chart-wrapper">
+            <canvas baseChart [data]="clientChartData" [type]="'pie'" [options]="sidebarChartOptions"></canvas>
+          </div>
+        </div>
+      </ng-container>
+
       <div class="sidebar-footer">
         <button class="nav-button logout-button" (click)="logOut()">
           <mat-icon>logout</mat-icon>
