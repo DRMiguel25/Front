@@ -84,5 +84,22 @@ listenSocket() {
   });
 }
 
+/**
+ * Convierte el UUID de la orden a un número corto legible (01-99)
+ * Usa los últimos caracteres del UUID para generar un número consistente
+ */
+getDisplayOrderNumber(orderId: string): string {
+  if (!orderId) return '00';
+  
+  // Tomar los últimos 4 caracteres hexadecimales del UUID
+  const lastChars = orderId.replace(/-/g, '').slice(-4);
+  
+  // Convertir a número y aplicar módulo 99 + 1 para obtener 01-99
+  const num = parseInt(lastChars, 16) % 99 + 1;
+  
+  // Formatear con ceros a la izquierda (01, 02, ... 99)
+  return num.toString().padStart(2, '0');
+}
+
 }
 

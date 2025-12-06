@@ -1,171 +1,563 @@
-.container{
+/* ========================================
+   POS McDONALD'S STYLE - Menu Component
+   ======================================== */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 0;
+  background: var(--pos-bg-secondary);
+  min-height: 100%;
+
+  /* ========================================
+     CATEGORY SECTIONS
+     ======================================== */
+  .food-container,
+  .wing-container,
+  .snacks-container,
+  .drinks-container {
     display: flex;
-    flex-direction: column;
-    gap: 36px;
-    .food-container, .wing-container, .snacks-container, .drinks-container{
-        justify-content: center;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 24px;
-        .title{
-            width: 100%;
-            h3{
-                margin: 0;
-            }
-        }
-        .hamburger, .wings, .snacks, .drink{
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-width: 160px;
-            align-items: center;
-            width: 100%;
-            justify-content: space-between;
-            height: 228px;
-            text-align: center;
-            img{
-                width: 48px;
-            }            
-        }
-    }
-    ::ng-deep mat-form-field{
-        max-width: 128px;
-        .mdc-text-field--outlined{
-            height: 36px !important;
-        }
-        .mat-mdc-form-field-flex{
-            height: 36px !important;
-        }
-        .mdc-text-field--outlined .mat-mdc-form-field-infix, .mdc-text-field--no-label .mat-mdc-form-field-infix{
-            padding-top: 6px !important;
-            padding-bottom: 6px !important;
-            input{
-                text-align: center;
-            }
-        }
-    }
-    .button-primary{
-        margin-left: auto;
-        width: auto;
-    }
-    .nav{
-        max-width: 30vw;
-        padding: 0;
-    }
-    
-    .sidebar-header {
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    padding: 0 16px;
+
+    .title {
+      width: 100%;
+      padding: 16px 0;
+      border-bottom: 3px solid var(--pos-gold);
+      margin-bottom: 8px;
+
+      h2 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 16px;
-        background-color: var(--app-primary-600);
-        color: white;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        
-        h3 {
-            margin: 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        
-        .close-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            
-            mat-icon {
-                color: white;
-                font-size: 24px;
-                width: 24px;
-                height: 24px;
-            }
-            
-            &:hover {
-                background: rgba(255, 255, 255, 0.3);
-            }
-            
-            &:active {
-                background: rgba(255, 255, 255, 0.4);
-            }
-        }
-    }
-    .exceptions-container, .extras-container{
-        display: flex;
-        flex-direction: column;
-        row-gap: 8px;
-        span{
-            font-size: 12px;
-            text-align: center;
-        }
-    }
-    .exceptions,.extras{
-        height: 48px;
-        width: 48px;
-        object-fit: contain;
-    }
-    ::ng-deep .mdc-checkbox{
-        display: none !important;
-    }
-    ::ng-deep .mat-mdc-checkbox{
-        padding: 8px;
-        border-radius: 8px;
-    }
-    ::ng-deep .mat-mdc-checkbox-checked{
-        background: var(--secondary);
-        color: white !important;
-    }
-    .ingredientsContainer{
-        background-color: #F1F5F9;
-        padding: 8px;
-        border-radius: 16px;
-        margin: 0 16px;
-    }
-    ::ng-deep {
-        .mat-drawer-content{
-            margin-left: 0 !important;
+        gap: 12px;
 
+
+      }
+
+      h3 {
+        margin: 8px 0 0;
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: #666;
+        line-height: 1.5;
+      }
+    }
+
+    /* ========================================
+       PRODUCT CARDS (POS KIOSK STYLE)
+       ======================================== */
+    .hamburger,
+    .wings,
+    .snacks,
+    .drink {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 180px;
+      padding: 20px 16px;
+      background: var(--pos-bg-card);
+      border-radius: var(--pos-card-radius);
+      box-shadow: var(--pos-card-shadow);
+      transition: all var(--pos-transition-fast);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+
+      /* Glow effect on hover */
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%);
+        transform: scaleX(0);
+        transition: transform var(--pos-transition-fast);
+      }
+
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--pos-card-hover-shadow);
+
+        &::before {
+          transform: scaleX(1);
         }
-    }
-    .container-exceptions{
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        justify-content: center;
-    }
-    &.float-container{
-        position: relative;
-        height: calc(100vh - 64px);
-        overflow-y: scroll;
-    }
-    .float{
-        position: sticky;
-        bottom: 16px;
-        right: 16px;
-        display: flex;
-        justify-content: flex-end;
-    }
-    ::ng-deep .count{
-        .mat-mdc-text-field-wrapper{
-            box-shadow: 0 20px 25px -5px var(--secondaryOpacity), 0 8px 10px -6px var(--secondaryOpacity);
+
+        img {
+          transform: scale(1.15) rotate(3deg);
         }
-        
+      }
+
+      img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        margin-bottom: 12px;
+        transition: transform var(--pos-transition-bounce);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+      }
+
+      h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        text-align: center;
+        margin: 0 0 4px;
+        line-height: 1.3;
+      }
+
+      h5 {
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: #888;
+        text-align: center;
+        margin: 0 0 12px;
+        line-height: 1.4;
+        min-height: 32px;
+      }
     }
-    .comments{
-        padding: 0 16px;
-        textarea{
-            width: 100%;
+  }
+
+  /* ========================================
+     QUANTITY CONTROLS (POS STYLE)
+     ======================================== */
+  ::ng-deep mat-form-field {
+    max-width: 130px;
+    width: 100%;
+
+    .mdc-text-field--outlined {
+      height: 44px !important;
+      background: #f8f9fa;
+      border-radius: 22px !important;
+
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__trailing,
+      .mdc-notched-outline__notch {
+        border-color: #e0e0e0 !important;
+      }
+    }
+
+    .mat-mdc-form-field-flex {
+      height: 44px !important;
+      align-items: center;
+    }
+
+    .mdc-text-field--outlined .mat-mdc-form-field-infix,
+    .mdc-text-field--no-label .mat-mdc-form-field-infix {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+
+      input {
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #1a1a2e;
+      }
+    }
+
+    /* Plus/Minus Icons */
+    mat-icon {
+      cursor: pointer;
+      color: #888;
+      font-size: 24px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all var(--pos-transition-fast);
+
+      &:hover {
+        background: var(--pos-gold);
+        color: #1a1a2e;
+        transform: scale(1.1);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  /* Active count indicator */
+  ::ng-deep .count {
+    .mdc-text-field-wrapper,
+    .mdc-text-field--outlined {
+      background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%) !important;
+      box-shadow: 0 4px 15px rgba(255, 199, 44, 0.4) !important;
+
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__trailing,
+      .mdc-notched-outline__notch {
+        border-color: var(--pos-gold-dark) !important;
+      }
+
+      input {
+        color: #1a1a2e !important;
+        font-weight: 800 !important;
+      }
+    }
+  }
+
+  /* ========================================
+     SIDEBAR PANEL (PERSONALIZATION)
+     ======================================== */
+  .nav {
+    max-width: 360px;
+    width: 100%;
+    padding: 0;
+    background: #fff;
+  }
+
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%);
+    color: #1a1a2e;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .close-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.1);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: all var(--pos-transition-fast);
+
+      mat-icon {
+        color: #1a1a2e;
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  /* ========================================
+     INGREDIENTS CONTAINER (Exceptions & Extras)
+     ======================================== */
+  .ingredientsContainer {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 16px;
+    margin: 16px;
+
+    mat-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid;
+    }
+  }
+
+  .container-exceptions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  /* ========================================
+     EXCEPTION ITEMS (RED THEME)
+     ======================================== */
+  .exceptions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 6px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #fff;
+    border: 2px solid transparent;
+    transition: all var(--pos-transition-fast);
+    min-width: 80px;
+
+    span {
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      color: #555;
+    }
+  }
+
+  .exceptions {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+    transition: transform var(--pos-transition-bounce);
+  }
+
+  /* Exception checkbox styling */
+  ::ng-deep .mat-mdc-checkbox:has(.exceptions-container) {
+    padding: 0 !important;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all var(--pos-transition-fast);
+
+    &:hover {
+      .exceptions-container {
+        border-color: var(--pos-exception-border);
+        background: var(--pos-exception-bg);
+
+        .exceptions {
+          transform: scale(1.1);
         }
+
+        span {
+          color: var(--pos-red);
+        }
+      }
     }
+
+    &.mat-mdc-checkbox-checked {
+      .exceptions-container {
+        background: var(--pos-exception-hover);
+        border-color: var(--pos-red-dark);
+        box-shadow: var(--pos-exception-glow);
+
+        span {
+          color: #fff !important;
+          font-weight: 700;
+        }
+
+        .exceptions {
+          filter: brightness(0) invert(1);
+          transform: scale(1.15);
+        }
+      }
+    }
+  }
+
+  /* Label for exceptions section */
+  .ingredientsContainer:has(.exceptions-container) mat-label {
+    color: var(--pos-red);
+    border-color: var(--pos-red);
+
+
+  }
+
+  /* ========================================
+     EXTRA ITEMS (GREEN THEME)
+     ======================================== */
+  .extras-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 6px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #fff;
+    border: 2px solid transparent;
+    transition: all var(--pos-transition-fast);
+    min-width: 80px;
+
+    span {
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      color: #555;
+
+      &:last-child {
+        color: var(--pos-extra-color);
+        font-weight: 700;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .extras {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+    transition: transform var(--pos-transition-bounce);
+  }
+
+  /* Extra checkbox styling */
+  ::ng-deep .mat-mdc-checkbox:has(.extras-container) {
+    padding: 0 !important;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all var(--pos-transition-fast);
+
+    &:hover {
+      .extras-container {
+        border-color: var(--pos-extra-border);
+        background: var(--pos-extra-bg);
+
+        .extras {
+          transform: scale(1.1);
+        }
+
+        span {
+          color: var(--pos-extra-color);
+        }
+      }
+    }
+
+    &.mat-mdc-checkbox-checked {
+      .extras-container {
+        background: var(--pos-extra-hover);
+        border-color: var(--pos-extra-dark);
+        box-shadow: var(--pos-extra-glow);
+
+        span {
+          color: #fff !important;
+          font-weight: 700;
+        }
+
+        .extras {
+          filter: brightness(0) invert(1);
+          transform: scale(1.15);
+        }
+      }
+    }
+  }
+
+  /* Label for extras section */
+  .ingredientsContainer:has(.extras-container) mat-label {
+    color: var(--pos-extra-color);
+    border-color: var(--pos-extra-color);
+
+
+  }
+
+  /* Hide default checkbox */
+  ::ng-deep .mdc-checkbox {
+    display: none !important;
+  }
+
+  ::ng-deep .mat-mdc-checkbox {
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  /* Override default checked state */
+  ::ng-deep .mat-mdc-checkbox-checked {
+    background: transparent !important;
+  }
+
+  /* ========================================
+     COMMENTS SECTION
+     ======================================== */
+  .comments {
+    padding: 16px 24px;
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 16px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      resize: vertical;
+      transition: all var(--pos-transition-fast);
+
+      &:focus {
+        outline: none;
+        border-color: var(--pos-gold);
+        box-shadow: 0 0 0 4px rgba(255, 199, 44, 0.15);
+      }
+
+      &::placeholder {
+        color: #aaa;
+      }
+    }
+  }
+
+  /* Product name in sidebar */
+  h2 {
+    padding: 16px 24px 8px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    border-left: 4px solid var(--pos-gold);
+    margin: 0;
+    background: linear-gradient(90deg, rgba(255, 199, 44, 0.1) 0%, transparent 100%);
+  }
+
+  /* ========================================
+     FLOATING ACTION BUTTON
+     ======================================== */
+  &.float-container {
+    position: relative;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+    padding-bottom: 100px;
+  }
+
+  .float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 100;
+
+    .button-primary {
+      padding: 16px 40px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%);
+      color: #1a1a2e;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(255, 199, 44, 0.4);
+      transition: all var(--pos-transition-fast);
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 12px 35px rgba(255, 199, 44, 0.5);
+      }
+
+      &:active {
+        transform: translateY(-2px) scale(0.98);
+      }
+    }
+  }
+
+  /* Sidenav content padding */
+  ::ng-deep .mat-drawer-content {
+    margin-left: 0 !important;
+  }
 }
 
 /* ========================================
@@ -173,151 +565,343 @@
    ======================================== */
 
 @media (max-width: 768px) {
-    .container {
-        gap: 24px;
-        
-        .nav {
-            max-width: 60vw !important;
-            width: 60vw !important;
-        }
-        
-        .sidebar-header {
-            padding: 12px 16px;
-            
-            h3 {
-                font-size: 1rem;
-            }
-            
-            .close-button {
-                width: 32px;
-                height: 32px;
-                
-                mat-icon {
-                    font-size: 20px;
-                    width: 20px;
-                    height: 20px;
-                }
-            }
-        }
-        
-        .food-container, .wing-container, .snacks-container, .drinks-container {
-            gap: 16px;
-            
-            .title {
-                h2 {
-                    font-size: 1.5rem;
-                }
-                
-                h3 {
-                    font-size: 0.9rem;
-                }
-            }
-            
-            .hamburger, .wings, .snacks, .drink {
-                max-width: 140px;
-                height: 200px;
-                gap: 6px;
-            }
-        }
-        
-        .float {
-            bottom: 12px;
-            right: 12px;
-            
-            .button-primary {
-                padding: 12px 24px;
-                font-size: 0.95rem;
-            }
-        }
-        
-        .ingredientsContainer {
-            margin: 0 8px;
-            padding: 12px;
-        }
+  .container {
+    gap: 24px;
+
+    .nav {
+      max-width: 80vw !important;
+      width: 80vw !important;
     }
+
+    .sidebar-header {
+      padding: 16px 20px;
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      .close-button {
+        width: 36px;
+        height: 36px;
+
+        mat-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .food-container,
+    .wing-container,
+    .snacks-container,
+    .drinks-container {
+      gap: 16px;
+      padding: 0 12px;
+
+      .title {
+        h2 {
+          font-size: 1.4rem;
+        }
+
+        h3 {
+          font-size: 0.85rem;
+        }
+      }
+
+      .hamburger,
+      .wings,
+      .snacks,
+      .drink {
+        width: calc(50% - 8px);
+        max-width: none;
+        padding: 16px 12px;
+
+        img {
+          width: 60px;
+          height: 60px;
+        }
+
+        h4 {
+          font-size: 0.9rem;
+        }
+
+        h5 {
+          font-size: 0.7rem;
+          min-height: 28px;
+        }
+      }
+    }
+
+    .float {
+      bottom: 16px;
+      right: 16px;
+      left: 16px;
+
+      .button-primary {
+        width: 100%;
+        padding: 18px 32px;
+        font-size: 1rem;
+      }
+    }
+
+    .ingredientsContainer {
+      margin: 12px;
+      padding: 16px;
+    }
+
+    .exceptions-container,
+    .extras-container {
+      min-width: 70px;
+      padding: 10px;
+
+      span {
+        font-size: 10px;
+      }
+    }
+
+    .exceptions,
+    .extras {
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
 
 @media (max-width: 480px) {
-    .container {
-        gap: 16px;
-        
-        .nav {
-            max-width: 75vw !important;
-            width: 75vw !important;
-        }
-        
-        .sidebar-header {
-            padding: 10px 12px;
-            
-            h3 {
-                font-size: 0.95rem;
-            }
-            
-            .close-button {
-                width: 28px;
-                height: 28px;
-                
-                mat-icon {
-                    font-size: 18px;
-                    width: 18px;
-                    height: 18px;
-                }
-            }
-        }
-        
-        .food-container, .wing-container, .snacks-container, .drinks-container {
-            gap: 12px;
-            
-            .title {
-                h2 {
-                    font-size: 1.25rem;
-                }
-                
-                h3 {
-                    font-size: 0.85rem;
-                }
-            }
-            
-            .hamburger, .wings, .snacks, .drink {
-                max-width: 120px;
-                height: 180px;
-                gap: 4px;
-                
-                h4 {
-                    font-size: 0.9rem;
-                    margin: 4px 0;
-                }
-                
-                h5 {
-                    font-size: 0.75rem;
-                    margin: 2px 0;
-                }
-            }
-        }
-        
-        ::ng-deep mat-form-field {
-            max-width: 110px;
-        }
-        
-        .float {
-            bottom: 8px;
-            right: 8px;
-            left: 8px;
-            
-            .button-primary {
-                width: 100%;
-                padding: 14px 20px;
-                font-size: 1rem;
-            }
-        }
-        
-        .ingredientsContainer {
-            margin: 0 4px;
-            padding: 8px;
-        }
-        
-        .exceptions-container, .extras-container {
-            gap: 6px;
-        }
+  .container {
+    gap: 16px;
+
+    .nav {
+      max-width: 90vw !important;
+      width: 90vw !important;
     }
+
+    .sidebar-header {
+      padding: 14px 16px;
+
+      h3 {
+        font-size: 0.95rem;
+      }
+
+      .close-button {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .food-container,
+    .wing-container,
+    .snacks-container,
+    .drinks-container {
+      gap: 12px;
+      padding: 0 8px;
+
+      .title {
+        h2 {
+          font-size: 1.2rem;
+
+          &::before {
+            font-size: 1.2rem;
+          }
+        }
+
+        h3 {
+          font-size: 0.8rem;
+        }
+      }
+
+      .hamburger,
+      .wings,
+      .snacks,
+      .drink {
+        width: calc(50% - 6px);
+        padding: 12px 8px;
+
+        img {
+          width: 50px;
+          height: 50px;
+          margin-bottom: 8px;
+        }
+
+        h4 {
+          font-size: 0.85rem;
+          margin-bottom: 2px;
+        }
+
+        h5 {
+          font-size: 0.65rem;
+          margin-bottom: 8px;
+          min-height: 24px;
+        }
+      }
+    }
+
+    ::ng-deep mat-form-field {
+      max-width: 110px;
+
+      .mdc-text-field--outlined {
+        height: 40px !important;
+      }
+
+      mat-icon {
+        font-size: 20px;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    .float {
+      bottom: 12px;
+      right: 12px;
+      left: 12px;
+
+      .button-primary {
+        padding: 16px 24px;
+        font-size: 0.95rem;
+      }
+    }
+
+    .ingredientsContainer {
+      margin: 8px;
+      padding: 12px;
+
+      mat-label {
+        font-size: 0.75rem;
+        margin-bottom: 12px;
+      }
+    }
+
+    .container-exceptions {
+      gap: 8px;
+    }
+
+    .exceptions-container,
+    .extras-container {
+      min-width: 60px;
+      padding: 8px;
+
+      span {
+        font-size: 9px;
+      }
+    }
+
+    .exceptions,
+    .extras {
+      width: 36px;
+      height: 36px;
+    }
+
+    .comments {
+      padding: 12px 16px;
+
+      textarea {
+        min-height: 80px;
+        padding: 12px;
+        font-size: 0.9rem;
+      }
+    }
+
+    h2 {
+      padding: 12px 16px 6px;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .container {
+    .sidebar-header {
+      padding: 12px 16px;
+    }
+
+    .float {
+      bottom: 12px;
+    }
+
+    .ingredientsContainer {
+      padding: 12px;
+      margin: 8px;
+    }
+  }
+}
+
+/* ========================================
+   DARK MODE OVERRIDES
+   ======================================== */
+
+:host-context(.dark-mode) {
+  .container {
+    background: #0f1629;
+
+    .food-container,
+    .wing-container,
+    .snacks-container,
+    .drinks-container {
+      .title h2 {
+        color: #fff;
+      }
+
+      .title h3 {
+        color: #b0b3b8;
+      }
+
+      .hamburger,
+      .wings,
+      .snacks,
+      .drink {
+        background: #1a1a2e;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+        h4 {
+          color: #fff;
+        }
+
+        h5 {
+          color: #b0b3b8;
+        }
+
+        &:hover {
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+      }
+    }
+
+    .nav {
+      background: #1a1a2e;
+    }
+
+    .ingredientsContainer {
+      background: #16213e;
+
+      mat-label {
+        color: var(--pos-gold);
+      }
+    }
+
+    .exceptions-container,
+    .extras-container {
+      background: #1a1a2e;
+      border-color: rgba(255, 255, 255, 0.1);
+
+      span {
+        color: #b0b3b8;
+      }
+    }
+
+    .comments textarea {
+      background: #16213e;
+      border-color: rgba(255, 199, 44, 0.2);
+      color: #fff;
+
+      &::placeholder {
+        color: #666;
+      }
+    }
+
+    h2 {
+      color: #fff;
+    }
+  }
 }

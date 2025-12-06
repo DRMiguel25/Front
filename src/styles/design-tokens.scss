@@ -284,6 +284,51 @@
   --secondary: var(--color-primary-600);
   --secondaryOpacity: rgba(0, 137, 123, 0.35);
   --primary: var(--color-primary-600);
+  
+  /* ========================================
+     POS McDONALD'S STYLE - Design System
+     ======================================== */
+  
+  /* Base Backgrounds */
+  --pos-bg-primary: #fafafa;
+  --pos-bg-secondary: #f5f5f5;
+  --pos-bg-dark: #1a1a2e;
+  --pos-bg-card: #ffffff;
+  --pos-bg-overlay: rgba(0, 0, 0, 0.75);
+  
+  /* McDonald's Inspired Colors */
+  --pos-gold: #ffc72c;
+  --pos-gold-dark: #daa520;
+  --pos-red: #da291c;
+  --pos-red-dark: #b71c1c;
+  --pos-red-light: #ff5252;
+  
+  /* Exception Colors (Red Theme) */
+  --pos-exception-bg: rgba(218, 41, 28, 0.1);
+  --pos-exception-border: #da291c;
+  --pos-exception-hover: linear-gradient(135deg, #da291c 0%, #b71c1c 100%);
+  --pos-exception-glow: 0 0 20px rgba(218, 41, 28, 0.5);
+  
+  /* Extra Colors (Green Theme) */
+  --pos-extra-bg: rgba(39, 174, 96, 0.1);
+  --pos-extra-border: #27ae60;
+  --pos-extra-color: #27ae60;
+  --pos-extra-dark: #1e8449;
+  --pos-extra-hover: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+  --pos-extra-glow: 0 0 20px rgba(39, 174, 96, 0.5);
+  
+  /* POS Card Styles */
+  --pos-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --pos-card-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  --pos-card-radius: 16px;
+  
+  /* POS Button Styles */
+  --pos-btn-radius: 12px;
+  --pos-btn-padding: 12px 24px;
+  
+  /* POS Animations */
+  --pos-transition-fast: 0.2s ease;
+  --pos-transition-bounce: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 /* ========================================

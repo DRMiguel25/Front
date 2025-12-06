@@ -1,3 +1,349 @@
-.new-user{
-    margin-left: 16px;
+/* ========================================
+   USER VIEW - POS STYLE
+   ======================================== */
+
+.user-view-container {
+  padding: 24px;
+  background: var(--pos-bg-secondary);
+  min-height: 100%;
+}
+
+/* Page Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid var(--pos-gold);
+  
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+/* New User Button */
+.new-user {
+  margin-left: 16px;
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%);
+  color: #1a1a2e;
+  border: none;
+  border-radius: var(--pos-btn-radius);
+  box-shadow: 0 4px 15px rgba(255, 199, 44, 0.3);
+  cursor: pointer;
+  transition: all var(--pos-transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 199, 44, 0.4);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+/* User Cards Grid */
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.user-card {
+  background: var(--pos-bg-card);
+  border-radius: var(--pos-card-radius);
+  box-shadow: var(--pos-card-shadow);
+  overflow: hidden;
+  transition: all var(--pos-transition-fast);
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--pos-card-hover-shadow);
+  }
+  
+  .user-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    
+    .user-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--pos-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      box-shadow: 0 4px 12px rgba(255, 199, 44, 0.3);
+    }
+    
+    .user-info {
+      flex: 1;
+      
+      .user-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 0 4px;
+      }
+      
+      .user-email {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin: 0;
+      }
+    }
+  }
+  
+  .user-body {
+    padding: 20px;
+  }
+  
+  .user-role {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    
+    &.role-admin {
+      background: linear-gradient(135deg, #3949ab 0%, #1a237e 100%);
+      color: #fff;
+    }
+    
+    &.role-chef {
+      background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+      color: #fff;
+    }
+    
+    &.role-cashier {
+      background: linear-gradient(135deg, #00acc1 0%, #006064 100%);
+      color: #fff;
+    }
+    
+    &.role-client {
+      background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%);
+      color: #1a1a2e;
+    }
+  }
+  
+  .user-actions {
+    padding: 16px 20px;
+    background: #f8f9fa;
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid #eee;
+    
+    button {
+      flex: 1;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--pos-transition-fast);
+      
+      &.btn-edit {
+        background: transparent;
+        border: 2px solid var(--pos-gold);
+        color: var(--pos-gold-dark);
+        
+        &:hover {
+          background: var(--pos-gold);
+          color: #1a1a2e;
+        }
+      }
+      
+      &.btn-delete {
+        background: transparent;
+        border: 2px solid var(--pos-red);
+        color: var(--pos-red);
+        
+        &:hover {
+          background: var(--pos-red);
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+/* Table Styles */
+::ng-deep {
+  .mat-mdc-table {
+    background: var(--pos-bg-card);
+    border-radius: var(--pos-card-radius);
+    overflow: hidden;
+    box-shadow: var(--pos-card-shadow);
+
+    .mat-mdc-header-row {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    .mat-mdc-header-cell {
+      padding: 18px 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--pos-gold);
+      border-bottom: none;
+    }
+
+    .mat-mdc-row {
+      transition: all var(--pos-transition-fast);
+
+      &:hover {
+        background: rgba(255, 199, 44, 0.08);
+      }
+
+      &:nth-child(even) {
+        background: #fafafa;
+
+        &:hover {
+          background: rgba(255, 199, 44, 0.1);
+        }
+      }
+    }
+
+    .mat-mdc-cell {
+      padding: 16px 20px;
+      font-size: 0.95rem;
+      color: #333;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .user-view-container {
+    padding: 16px;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
+  
+  .new-user {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .users-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-card {
+    .user-header {
+      padding: 16px;
+      
+      .user-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+      }
+      
+      .user-info .user-name {
+        font-size: 1rem;
+      }
+    }
+    
+    .user-body {
+      padding: 16px;
+    }
+    
+    .user-actions {
+      padding: 12px 16px;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+}
+
+/* ========================================
+   DARK MODE SUPPORT
+   ======================================== */
+
+:host-context(.dark-mode) {
+  .user-view-container {
+    background: #0f1629;
+  }
+  
+  .page-header {
+    h2 {
+      color: #ffffff;
+    }
+  }
+  
+  .user-card {
+    background: #1a1a2e;
+    
+    .user-body {
+      color: #b0b3b8;
+    }
+    
+    .user-actions {
+      background: #16213e;
+      border-top-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  ::ng-deep {
+    .mat-mdc-table {
+      background: #1a1a2e;
+      
+      .mat-mdc-row {
+        &:nth-child(even) {
+          background: #16213e;
+        }
+        
+        &:hover {
+          background: rgba(255, 199, 44, 0.1);
+        }
+      }
+      
+      .mat-mdc-cell {
+        color: #ffffff;
+      }
+    }
+  }
 }

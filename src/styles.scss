@@ -28,6 +28,18 @@ body {
   background-color: var(--color-bg-secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Body Styles */
+body.dark-mode {
+  background-color: #0f1629;
+  color: #ffffff;
+}
+
+body.light-mode {
+  background-color: #f5f5f5;
+  color: #1a1a2e;
 }
 
 * {
@@ -467,4 +479,779 @@ input[type="number"] {
 .mat-mdc-dialog-container {
   border-radius: var(--radius-xl) !important;
   box-shadow: var(--shadow-2xl) !important;
+}
+
+/* ========================================
+   POS McDONALD'S GLOBAL STYLES
+   ======================================== */
+
+/* POS Card Style */
+.pos-card {
+  background: var(--pos-bg-card);
+  border-radius: var(--pos-card-radius);
+  box-shadow: var(--pos-card-shadow);
+  transition: all var(--pos-transition-fast);
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: var(--pos-card-hover-shadow);
+    transform: translateY(-4px);
+  }
+}
+
+/* POS Header Style */
+.pos-header {
+  background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%);
+  color: #1a1a2e;
+  padding: 16px 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Exception Style (Red) */
+.pos-exception {
+  background: var(--pos-exception-bg);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: all var(--pos-transition-fast);
+  cursor: pointer;
+
+  &:hover,
+  &.selected {
+    background: var(--pos-exception-hover);
+    border-color: var(--pos-red-dark);
+    box-shadow: var(--pos-exception-glow);
+    color: #fff;
+  }
+}
+
+/* Extra Style (Green) */
+.pos-extra {
+  background: var(--pos-extra-bg);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: all var(--pos-transition-fast);
+  cursor: pointer;
+
+  &:hover,
+  &.selected {
+    background: var(--pos-extra-hover);
+    border-color: var(--pos-extra-dark);
+    box-shadow: var(--pos-extra-glow);
+    color: #fff;
+  }
+}
+
+/* POS Button Gold */
+.pos-btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: var(--pos-btn-padding);
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #1a1a2e;
+  background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%);
+  border: none;
+  border-radius: var(--pos-btn-radius);
+  box-shadow: 0 4px 15px rgba(255, 199, 44, 0.3);
+  cursor: pointer;
+  transition: all var(--pos-transition-fast);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 199, 44, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* POS Button Red (for exceptions/cancel) */
+.pos-btn-red {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: var(--pos-btn-padding);
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pos-red) 0%, var(--pos-red-dark) 100%);
+  border: none;
+  border-radius: var(--pos-btn-radius);
+  box-shadow: 0 4px 15px rgba(218, 41, 28, 0.3);
+  cursor: pointer;
+  transition: all var(--pos-transition-fast);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(218, 41, 28, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
+  }
+}
+
+/* POS Button Green (for extras/confirm) */
+.pos-btn-green {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: var(--pos-btn-padding);
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pos-extra-color) 0%, var(--pos-extra-dark) 100%);
+  border: none;
+  border-radius: var(--pos-btn-radius);
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+  cursor: pointer;
+  transition: all var(--pos-transition-fast);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
+  }
+}
+
+/* POS Section Title */
+.pos-section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--pos-gold);
+  margin-bottom: 20px;
+}
+
+/* POS Badge */
+.pos-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 20px;
+
+  &.pos-badge-gold {
+    background: var(--pos-gold);
+    color: #1a1a2e;
+  }
+
+  &.pos-badge-red {
+    background: var(--pos-red);
+    color: #fff;
+  }
+
+  &.pos-badge-green {
+    background: var(--pos-extra-color);
+    color: #fff;
+  }
+}
+
+/* POS Quantity Control */
+.pos-quantity {
+  display: inline-flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 25px;
+  padding: 4px;
+
+  .pos-qty-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--pos-transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: var(--pos-gold);
+      color: #1a1a2e;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  .pos-qty-value {
+    min-width: 40px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+}
+
+/* Animation Utilities */
+@keyframes pos-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pos-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes pos-glow-red {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(218, 41, 28, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(218, 41, 28, 0.6);
+  }
+}
+
+@keyframes pos-glow-green {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(39, 174, 96, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(39, 174, 96, 0.6);
+  }
+}
+
+.pos-animate-pulse {
+  animation: pos-pulse 0.6s ease-in-out;
+}
+
+.pos-animate-shake {
+  animation: pos-shake 0.4s ease-in-out;
+}
+
+.pos-glow-red {
+  animation: pos-glow-red 1.5s ease-in-out infinite;
+}
+
+.pos-glow-green {
+  animation: pos-glow-green 1.5s ease-in-out infinite;
+}
+
+/* ========================================
+   DARK MODE GLOBAL OVERRIDES
+   ======================================== */
+
+body.dark-mode {
+  /* Card backgrounds */
+  --pos-bg-card: #1a1a2e;
+  --pos-bg-secondary: #0f1629;
+  --pos-bg-primary: #16213e;
+  
+  /* Text colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b0b3b8;
+  
+  /* Card shadows for dark mode */
+  --pos-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --pos-card-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+
+  /* ========================================
+     SECTION TITLES AND HEADERS
+     ======================================== */
+  
+  /* POS Section titles */
+  .pos-section-title,
+  .section-title {
+    color: #ffffff !important;
+  }
+  
+  /* Page headers */
+  .page-header {
+    h2 {
+      color: #ffffff !important;
+    }
+  }
+  
+  /* Header left title */
+  .header-left {
+    h2 {
+      color: #ffffff !important;
+    }
+  }
+  
+  /* User name in header */
+  .user-name {
+    color: #ffffff !important;
+  }
+
+  /* ========================================
+     MATERIAL COMPONENTS
+     ======================================== */
+
+  /* Material overrides */
+  .mat-mdc-table {
+    background: #1a1a2e !important;
+    
+    .mat-mdc-header-row {
+      background: #16213e !important;
+    }
+    
+    .mat-mdc-header-cell {
+      color: #ffffff !important;
+    }
+    
+    .mat-mdc-row {
+      &:nth-child(even) {
+        background: #16213e !important;
+      }
+      
+      &:hover {
+        background: rgba(255, 199, 44, 0.1) !important;
+      }
+    }
+    
+    .mat-mdc-cell {
+      color: #fff;
+    }
+  }
+  
+  /* Card backgrounds in dark mode */
+  .pos-card,
+  mat-card,
+  .mat-mdc-card {
+    background: #1a1a2e !important;
+    color: #fff !important;
+  }
+  
+  /* Form fields */
+  .mat-mdc-form-field {
+    /* Campo tipo outlined */
+    .mdc-text-field--outlined {
+      background: #16213e !important;
+    }
+    
+    /* Campo tipo filled */
+    .mdc-text-field--filled {
+      background: #16213e !important;
+      
+      &::before {
+        background: transparent !important;
+      }
+    }
+    
+    /* Wrapper general */
+    .mat-mdc-text-field-wrapper {
+      background: #16213e !important;
+    }
+    
+    input,
+    textarea {
+      color: #fff !important;
+      caret-color: var(--pos-gold) !important;
+    }
+    
+    .mat-mdc-form-field-hint {
+      color: #b0b3b8 !important;
+    }
+    
+    .mdc-floating-label {
+      color: #b0b3b8 !important;
+    }
+    
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__trailing,
+    .mdc-notched-outline__notch {
+      border-color: rgba(255, 199, 44, 0.3) !important;
+    }
+    
+    /* Underline para campos filled */
+    .mdc-line-ripple::before,
+    .mdc-line-ripple::after {
+      border-bottom-color: var(--pos-gold) !important;
+    }
+  }
+  
+  /* Checkboxes and radios */
+  .mat-mdc-checkbox .mdc-checkbox__background {
+    background-color: #16213e !important;
+    border-color: rgba(255, 199, 44, 0.5) !important;
+  }
+  
+  /* Dialogs */
+  .mat-mdc-dialog-container {
+    background: #1a1a2e !important;
+    
+    .dialog-title,
+    .dialog-message {
+      color: #fff !important;
+    }
+  }
+  
+  /* Buttons */
+  .btn-secondary,
+  .button-secondary {
+    background: #16213e !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+    
+    &:hover {
+      border-color: var(--pos-gold) !important;
+      color: var(--pos-gold) !important;
+    }
+  }
+  
+  /* Sidenav content */
+  .mat-drawer-content {
+    background: #0f1629 !important;
+  }
+
+  /* ========================================
+     ORDER AND PRODUCT CARDS
+     ======================================== */
+
+  /* Order cards */
+  .order-card,
+  .product {
+    background: #1a1a2e !important;
+    
+    h4, h3, h2 {
+      color: #fff !important;
+    }
+    
+    p, span {
+      color: #b0b3b8 !important;
+    }
+  }
+  
+  /* Product items */
+  .product-item {
+    background: rgba(255, 255, 255, 0.05) !important;
+    
+    .product-name {
+      color: #ffffff !important;
+    }
+  }
+  
+  /* Order footer and header */
+  .order-footer {
+    background: #16213e !important;
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+    
+    .order-total {
+      color: #ffffff !important;
+    }
+  }
+  
+  .order-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  /* Order container items */
+  .order-container .order {
+    background: #16213e !important;
+    
+    h4 {
+      color: #ffffff !important;
+    }
+    
+    p {
+      color: #b0b3b8 !important;
+    }
+  }
+  
+  /* Order products section */
+  .order-products {
+    h4 {
+      color: #ffffff !important;
+    }
+    
+    .product-placeholder {
+      background: rgba(255, 255, 255, 0.05) !important;
+      color: #b0b3b8 !important;
+    }
+  }
+  
+  /* Order comments */
+  .order-comments {
+    background: rgba(255, 199, 44, 0.15) !important;
+    
+    p {
+      color: #ffffff !important;
+    }
+  }
+  
+  /* Client name */
+  .client-name {
+    color: #b0b3b8 !important;
+  }
+  
+  /* No orders state */
+  .no-orders {
+    h3 {
+      color: #ffffff !important;
+    }
+    
+    p {
+      color: #b0b3b8 !important;
+    }
+  }
+
+  /* ========================================
+     PENDING ORDERS QUEUE
+     ======================================== */
+  
+  .pending-order-item {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    
+    &:hover {
+      background: rgba(255, 199, 44, 0.1) !important;
+    }
+  }
+  
+  .pending-order-client {
+    color: #ffffff !important;
+  }
+  
+  .pending-order-type {
+    color: #b0b3b8 !important;
+  }
+
+  /* ========================================
+     POS QUANTITY CONTROLS
+     ======================================== */
+  
+  .pos-quantity {
+    background: #16213e !important;
+    
+    .pos-qty-btn {
+      background: #1a1a2e !important;
+      color: #fff !important;
+      
+      &:hover {
+        background: var(--pos-gold) !important;
+        color: #1a1a2e !important;
+      }
+    }
+    
+    .pos-qty-value {
+      color: #fff !important;
+    }
+  }
+  
+  /* Exception/Extra containers stay vibrant */
+  .exception-container,
+  .exceptions-container {
+    background: var(--pos-exception-bg) !important;
+  }
+  
+  .extras-container {
+    background: var(--pos-extra-bg) !important;
+  }
+
+  /* ========================================
+     TABLE CONTAINER AND GENERAL TEXT
+     ======================================== */
+  
+  .table-container {
+    background: #0f1629 !important;
+    
+    h2, h3, h4 {
+      color: #ffffff !important;
+    }
+  }
+  
+  /* Menu toggle icon */
+  .menu-toggle mat-icon {
+    color: #ffffff !important;
+  }
+
+  /* ========================================
+     SCROLLBAR DARK MODE
+     ======================================== */
+  
+  .content::-webkit-scrollbar-track {
+    background: #16213e;
+  }
+}
+
+/* ========================================
+   DAISYUI THEME TOGGLE STYLES
+   ======================================== */
+
+/* Style the swap toggle button */
+.swap {
+  cursor: pointer;
+  
+  &.btn-ghost {
+    background: transparent;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 199, 44, 0.1);
+      border-color: var(--pos-gold);
+    }
+  }
+  
+  svg {
+    color: var(--pos-gold);
+    transition: transform 0.5s ease;
+  }
+  
+  input:checked ~ .swap-on {
+    opacity: 1;
+  }
+  
+  input:checked ~ .swap-off {
+    opacity: 0;
+  }
+  
+  input:not(:checked) ~ .swap-on {
+    opacity: 0;
+  }
+  
+  input:not(:checked) ~ .swap-off {
+    opacity: 1;
+  }
+}
+
+/* DaisyUI component overrides for our theme */
+.btn-primary {
+  background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%) !important;
+  border: none !important;
+  color: #1a1a2e !important;
+  
+  &:hover {
+    background: var(--pos-gold-dark) !important;
+  }
+}
+
+.btn-error {
+  background: linear-gradient(135deg, var(--pos-red) 0%, var(--pos-red-dark) 100%) !important;
+  border: none !important;
+  
+  &:hover {
+    background: var(--pos-red-dark) !important;
+  }
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--pos-extra-color) 0%, var(--pos-extra-dark) 100%) !important;
+  border: none !important;
+  
+  &:hover {
+    background: var(--pos-extra-dark) !important;
+  }
+}
+
+/* DaisyUI Card */
+.card {
+  background: var(--pos-bg-card);
+  border-radius: var(--pos-card-radius);
+  box-shadow: var(--pos-card-shadow);
+  transition: all var(--pos-transition-fast);
+  
+  &:hover {
+    box-shadow: var(--pos-card-hover-shadow);
+  }
+}
+
+/* DaisyUI Badge */
+.badge-primary {
+  background: var(--pos-gold) !important;
+  color: #1a1a2e !important;
+}
+
+.badge-error {
+  background: var(--pos-red) !important;
+}
+
+.badge-success {
+  background: var(--pos-extra-color) !important;
+}
+
+/* DaisyUI Alert */
+.alert-warning {
+  background: rgba(255, 199, 44, 0.15);
+  border-color: var(--pos-gold);
+  color: var(--pos-gold-dark);
+}
+
+.alert-error {
+  background: var(--pos-exception-bg);
+  border-color: var(--pos-red);
+  color: var(--pos-red-dark);
+}
+
+.alert-success {
+  background: var(--pos-extra-bg);
+  border-color: var(--pos-extra-color);
+  color: var(--pos-extra-dark);
+}
+
+/* DaisyUI Menu */
+.menu {
+  background: #1a1a2e;
+  border-radius: 12px;
+  
+  li > a {
+    color: #fff;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: rgba(255, 199, 44, 0.1);
+      color: var(--pos-gold);
+    }
+    
+    &.active {
+      background: rgba(255, 199, 44, 0.2);
+      color: var(--pos-gold);
+    }
+  }
+}
+
+/* DaisyUI Toast */
+.toast {
+  .alert {
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
 }

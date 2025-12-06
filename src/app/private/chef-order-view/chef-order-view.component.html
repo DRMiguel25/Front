@@ -7,7 +7,7 @@
             <div class="order-card">
                 <div class="order-header">
                     <div class="order-info">
-                        <h3 class="order-number">Orden #{{currentOrder.idorder}}</h3>
+                        <h3 class="order-number">Orden #{{getDisplayOrderNumber(currentOrder.idorder)}}</h3>
                         <p class="client-name">
                             <mat-icon>person</mat-icon>
                             {{currentOrder.client}}

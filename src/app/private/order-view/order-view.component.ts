@@ -150,6 +150,33 @@ export class OrderViewComponent {
 
     console.log("Enviando orden:", this._order.formOrder.value);
 
+    // Validaciones específicas con mensajes claros
+    if (this.eachProduct().length === 0) {
+      this._snackBar.open("Agrega al menos un producto al carrito", "", { duration: 3000, verticalPosition: 'top' });
+      return;
+    }
+
+    if (!this._order.formOrder.controls['client'].value) {
+      this._snackBar.open("Ingresa el nombre del cliente", "", { duration: 3000, verticalPosition: 'top' });
+      return;
+    }
+
+    // Verificar que todos los productos tengan tipo de orden seleccionado
+    const productsWithoutType = this.eachProduct().controls.filter((product: AbstractControl) => {
+      const productAux: FormGroup = product as FormGroup;
+      return productAux.controls['order_type'].value === null;
+    });
+
+    if (productsWithoutType.length > 0 && !this.isClient) {
+      this._snackBar.open("Selecciona el tipo de orden para todos los productos", "", { duration: 3000, verticalPosition: 'top' });
+      return;
+    }
+
+    if (!this._wsService.socketStatus) {
+      this._snackBar.open("Error de conexión. Intenta de nuevo.", "", { duration: 3000, verticalPosition: 'top' });
+      return;
+    }
+
     if (this._order.formOrder.valid && this._wsService.socketStatus) {
       try {
         var data = await this._provider.request('POST', 'order/createOrder', this._order.formOrder.value);
@@ -179,7 +206,9 @@ export class OrderViewComponent {
         this._snackBar.open("Error al procesar. Revisa la consola.", "", { duration: 3000 });
       }
     } else {
-      this._snackBar.open("Formulario inválido", "", { duration: 3000 });
+      console.log("Formulario inválido:", this._order.formOrder.errors);
+      console.log("Campos inválidos:", Object.keys(this._order.formOrder.controls).filter(key => this._order.formOrder.controls[key].invalid));
+      this._snackBar.open("Formulario inválido. Revisa todos los campos.", "", { duration: 3000 });
       this._order.formOrder.markAllAsTouched();
     }
   }

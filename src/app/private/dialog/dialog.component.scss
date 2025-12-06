@@ -1,0 +1,165 @@
+/* ========================================
+   DIALOG - POS STYLE
+   ======================================== */
+
+:host {
+  display: block;
+}
+
+.dialog-container {
+  padding: 32px;
+  text-align: center;
+  max-width: 400px;
+}
+
+.dialog-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+  color: var(--pos-gold);
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dialog-message {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  button {
+    min-width: 140px;
+    padding: 14px 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: var(--pos-btn-radius);
+    cursor: pointer;
+    transition: all var(--pos-transition-fast);
+    border: none;
+  }
+
+  .btn-cancel,
+  .btn-secondary {
+    background: #f5f5f5;
+    color: #666;
+    border: 2px solid #e0e0e0;
+
+    &:hover {
+      background: #fff;
+      border-color: #999;
+      transform: translateY(-2px);
+    }
+  }
+
+  .btn-confirm,
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pos-gold) 0%, var(--pos-gold-dark) 100%);
+    color: #1a1a2e;
+    box-shadow: 0 4px 15px rgba(255, 199, 44, 0.3);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 199, 44, 0.4);
+    }
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, var(--pos-red) 0%, var(--pos-red-dark) 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(218, 41, 28, 0.3);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(218, 41, 28, 0.4);
+    }
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, var(--pos-extra-color) 0%, var(--pos-extra-dark) 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+    }
+  }
+}
+
+/* Success Animation */
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.dialog-icon.success {
+  color: var(--pos-extra-color);
+  animation: checkmark 0.5s ease-out;
+}
+
+.dialog-icon.warning {
+  color: var(--pos-gold);
+}
+
+.dialog-icon.error {
+  color: var(--pos-red);
+}
+
+/* ========================================
+   DARK MODE SUPPORT
+   ======================================== */
+
+:host-context(.dark-mode) {
+  .dialog-container {
+    background: #1a1a2e;
+  }
+  
+  .dialog-title {
+    color: #ffffff;
+  }
+  
+  .dialog-message {
+    color: #b0b3b8;
+  }
+  
+  .dialog-actions {
+    .btn-cancel,
+    .btn-secondary {
+      background: #16213e;
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+      
+      &:hover {
+        background: #1a1a2e;
+        border-color: var(--pos-gold);
+        color: var(--pos-gold);
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LocalstorageService } from '../services/localstorage.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ProviderService } from '../services/provider.service';
+import { ThemeService } from '../services/theme.service';
 import { ChartData, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -28,6 +29,9 @@ export class PrivateComponent {
   private _router: Router = inject(Router);
   private _breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
   private _provider: ProviderService = inject(ProviderService);
+  
+  // Theme Service
+  themeService: ThemeService = inject(ThemeService);
 
   @ViewChild('drawer') drawer!: MatDrawer;
 
@@ -37,6 +41,16 @@ export class PrivateComponent {
   isMobile: boolean = false;
   drawerMode: 'side' | 'over' = 'side';
   drawerOpened: boolean = true;
+
+  // Getter para el tema actual
+  get isDarkMode(): boolean {
+    return this.themeService.isDark;
+  }
+
+  // Método para cambiar tema
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
 
   // Propiedades para la gráfica del cliente
   hasChartData: boolean = false;
