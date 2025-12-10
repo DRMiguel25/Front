@@ -29,6 +29,10 @@
                             <button class="button-secundary" (click)="openCancelDialog(element)">Cancelar orden</button>
                         }
                         
+                        @if (eachStatus.value == 1 && (currentUser.rol === 2 || currentUser.rol === 3)) {
+                            <button class="button-ready" (click)="markAsReady(element)">Marcar como lista</button>
+                        }
+                        
                         @if (eachStatus.value == 2 && currentUser.rol !== 4) {
                             <button class="button-secundary" (click)="openConfirmDialog(element)">Completar orden</button>
                         }

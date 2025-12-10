@@ -29,6 +29,25 @@
       box-shadow: 0 6px 20px rgba(255, 199, 44, 0.4);
     }
   }
+
+  .button-ready {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--pos-btn-radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    transition: all var(--pos-transition-fast);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    }
+  }
 }
 
 /* Page Header */

@@ -8,8 +8,8 @@ import { DialogCancelComponent } from '../dialog-cancel/dialog-cancel.component'
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { WebSocketsService } from '../../services/web-sockets.service';
 import { LocalstorageService } from '../../services/localstorage.service';
-// CORRECCIÓN 1: Importar CurrencyPipe (o CommonModule)
 import { CurrencyPipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-orders-view',
@@ -25,6 +25,7 @@ export class OrdersViewComponent {
   private dialog: MatDialog = inject(MatDialog);
   private _wsService: WebSocketsService = inject(WebSocketsService);
   private _localStorage: LocalstorageService = inject(LocalstorageService);
+  private _snackBar: MatSnackBar = inject(MatSnackBar);
 
   order: any[] = []; 
   currentUser: any = null;
@@ -73,6 +74,32 @@ export class OrdersViewComponent {
 
   openCancelDialog(data: any) {
     this.dialog.open(DialogCancelComponent, { data: data });
+  }
+
+  async markAsReady(element: any) {
+    if (this._wsService.socketStatus) {
+      // Actualizar el estado a 2 (Lista)
+      await this._provider.request('PUT', 'order/updateStatus', {
+        "status": 2,
+        "idorder": element.idorder,
+        "users_idusers": this.currentUser.idusers
+      });
+
+      this._snackBar.open("Orden marcada como lista", "", { duration: 3000, verticalPosition: 'top' });
+
+      // Emitir evento de WebSocket para actualizar en tiempo real
+      let nStatus: object = {
+        "idorder": element.idorder,
+        "client": element.client,
+        "total": element.total,
+        "mes": element.mes,
+        "comments": element.comments,
+        "status": 2,
+        "users_idusers": this.currentUser.idusers
+      };
+
+      this._wsService.request('comandas', nStatus);
+    }
   }
 
   listenSocket() {
